@@ -1,0 +1,13 @@
+{
+  "name": "anyapi",
+  "version": "0.0.1",
+  "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
+  "engines": {
+    "node": "0.6.15",
+    "npm": "1.0.x"
+  },
+  "dependencies": {
+    "mongodb": "1.x.x",
+    "restify": "1.x.x"
+  }
+}
