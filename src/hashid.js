@@ -1,5 +1,8 @@
 'use strict';
 
+// Credit to https://github.com/fiznool
+// http://fiznool.com/blog/2014/11/16/short-id-generation-in-javascript/
+
 /**
  * The default alphabet is 25 numbers and lowercase letters.
  * Any numbers that look like letters and vice versa are removed:
@@ -7,8 +10,7 @@
  * Also the following letters are not present, to prevent any
  * expletives: cfhistu
  */
-var ALPHABET =
-  '23456789abdegjkmnpqrvwxyz';
+var ALPHABET = '23456789abdegjkmnpqrvwxyz';
 
 var ALPHABET_LENGTH = ALPHABET.length;
 
@@ -56,9 +58,9 @@ HashID.generateUnique = function(previous) {
 
   // Try to generate a unique ID,
   // i.e. one that isn't in the previous.
-  while(!id && retries < UNIQUE_RETRIES) {
+  while (!id && retries < UNIQUE_RETRIES) {
     id = HashID.generate();
-    if(previous.indexOf(id) !== -1) {
+    if (previous.indexOf(id) !== -1) {
       id = null;
       retries++;
     }
