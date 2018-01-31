@@ -1,7 +1,9 @@
 {
   "name": "anyapi",
   "version": "0.0.1",
-  "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
+  "license": "MIT",
+  "description":
+    "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
   "scripts": {
     "tsc": "tsc",
     "prestart": "npm run tsc",
