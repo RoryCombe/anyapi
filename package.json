@@ -1,9 +1,8 @@
 {
   "name": "anyapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
-  "description":
-    "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
+  "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
   "scripts": {
     "tsc": "tsc",
     "prestart": "npm run tsc",
@@ -11,8 +10,8 @@
   },
   "dependencies": {
     "mongodb": "^3.1.13",
-    "restify": "^6.3.4",
-    "restify-errors": "^5.0.0"
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2"
   },
   "devDependencies": {
     "@types/mongodb": "^3.0.5",
