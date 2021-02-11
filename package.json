@@ -10,7 +10,7 @@
     "start": "node dist/anyapi.js"
   },
   "dependencies": {
-    "mongodb": "^3.0.2",
+    "mongodb": "^3.1.13",
     "restify": "^6.3.4",
     "restify-errors": "^5.0.0"
   },
