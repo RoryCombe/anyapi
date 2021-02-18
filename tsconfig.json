@@ -1,16 +1,11 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "jsx": "react",
     "lib": ["es6", "dom"],
     "importHelpers": true,
-    "noEmit": false,
+    "strict": true,
     "noEmitOnError": true,
-    "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": false,
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist/",
     "pretty": false,

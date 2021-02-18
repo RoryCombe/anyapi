@@ -1,17 +1,23 @@
-// A general helper class for basic Javascript helper functions
-//
-//-----------------------------------------------------------
+import { format } from 'date-fns';
 
-export const getQueryOptions = req => {
-  var options = {};
-  for (var q in req.query) {
-    options[q] = req.query[q].indexOf(':') > -1 ? [req.query[q].split(':')] : req.query[q];
-  }
-  return options;
-};
+export const getMeta = (
+  count: number,
+  page: string,
+  pageSize: number,
+  baseUrl: string,
+  collection: string
+) => ({
+  count,
+  pages: Math.ceil(count / pageSize),
+  next: `${baseUrl}/${collection}?page=${parseInt(page, 10) + 1}`,
+  prev: `${baseUrl}/${collection}?page=${parseInt(page, 10) - 1}`,
+});
 
+export const getDateNow = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
+/*
 // Array helper to retrieve the last element
-export const getLastElementInArray = array => {
+export const getLastElementInArray = (array) => {
   if (array.length > 0) return array[array.length - 1];
   else return undefined;
 };
@@ -46,3 +52,4 @@ export const getDateNow = () => {
     (s <= 9 ? '0' + s : s)
   );
 };
+*/
