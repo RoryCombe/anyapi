@@ -1,6 +1,6 @@
 import * as restify from 'restify';
 import * as restifyErrors from 'restify-errors';
-import { Adapter } from './typings/index';
+import { Adapter } from '../typings/index';
 import MongoDBAdapter from './adapters/mongodb';
 import { logMsg, logInfo, logError } from './utils';
 

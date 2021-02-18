@@ -1,5 +1,5 @@
 import { MongoClient, Db } from 'mongodb';
-import { Adapter } from '../../typings';
+import { Adapter } from '../../../typings';
 import { generateHashId, getMeta, logInfo } from '../../utils';
 
 interface AdapterOptions {
