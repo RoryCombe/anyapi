@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, MongoClientOptions } from 'mongodb';
 import { Adapter } from '../../../typings';
 import { generateHashId, getMeta, logInfo } from '../../utils';
 
@@ -6,33 +6,53 @@ interface AdapterOptions {
   url?: string;
   dbName?: string;
   pageSize?: number;
+  dropDatabase?: boolean;
 }
 
-export default (adapterOptions: AdapterOptions = {}): Adapter => {
+export default async (
+  adapterOptions: AdapterOptions = {}
+): Promise<{ adapter: Adapter; client: MongoClient }> => {
   const {
     url = 'mongodb://localhost:27017',
-    dbName = process.env.NODE_ENV === 'test' ? 'anyapi-test' : 'anyapi',
+    dbName = 'anyapi',
     pageSize = 50,
+    dropDatabase,
   } = adapterOptions;
   let db: Db;
 
   // Use connect method to connect to the server
-  MongoClient.connect(url, (err, client) => {
-    if (err) throw err;
-    db = client.db(dbName);
-    logInfo(`DB ${dbName} connected`);
-  });
+  const client = await MongoClient.connect(url, {
+    useUnifiedTopology: true,
+    writeConcern: {
+      j: true,
+    },
+  } as MongoClientOptions);
+
+  if (dropDatabase) {
+    await client.db(dbName).dropDatabase();
+  }
+
+  db = client.db(dbName);
+
+  const dbCollection = (collection: string) =>
+    db.collection(collection, {
+      writeConcern: { w: null },
+    } as any);
+
+  logInfo(`DB ${dbName} connected`);
 
   const getCollections = async () => {
+    logInfo(`db ${JSON.stringify(db.databaseName)}`);
     const collections = await db.collections();
     return collections.map((c) => c.collectionName);
   };
 
   const getAll = async (collection: string, options: any = {}) => {
+    logInfo(`db ${JSON.stringify(db.databaseName)}`);
     const { page = 1, baseUrl } = options;
     const [results, count] = await Promise.all([
-      db.collection(collection).find({}, options).toArray(),
-      db.collection(collection).count({}),
+      dbCollection(collection).find({}, options).toArray(),
+      (dbCollection(collection) as any).estimatedDocumentCount(),
     ]);
     return {
       meta: getMeta(count, page, pageSize, baseUrl, collection),
@@ -41,68 +61,35 @@ export default (adapterOptions: AdapterOptions = {}): Adapter => {
   };
 
   const get = (collection: string, id: string) =>
-    db.collection(collection).findOne({ id });
+    dbCollection(collection).findOne({ id });
 
-  const create = (collection: string, { id: _id, ...data }: any) =>
-    db
-      .collection(collection)
-      .insertOne({ id: generateHashId, ...data }, { w: 1 });
+  const create = async (collection: string, { id: _id, ...data }: any) => {
+    const result = await dbCollection(collection).insertOne({
+      id: generateHashId(),
+      ...data,
+    });
+    return result.ops[0];
+  };
 
   const update = async (collection: string, id: string, data: any) => {
-    await db.collection(collection).updateOne({ id }, { $set: data }, {});
-    return db.collection(collection).findOne({ id });
+    await dbCollection(collection).updateOne({ id }, { $set: data }, {});
+    return dbCollection(collection).findOne({ id });
   };
 
-  const destroy = (collection: string, id: string) =>
-    db.collection(collection).deleteOne({ id }, { w: 1 });
+  const destroy = async (collection: string, id: string) => {
+    const result = await dbCollection(collection).deleteOne({ id });
+    return result.result;
+  };
 
   return {
-    getCollections,
-    getAll,
-    get,
-    create,
-    update,
-    destroy,
+    adapter: {
+      getCollections,
+      getAll,
+      get,
+      create,
+      update,
+      destroy,
+    },
+    client,
   };
 };
-
-/*
-export default class MongoDBAdapter implements Adapter {
-  db: mongo.Db;
-
-  constructor() {
-    const url = 'mongodb://localhost:27017';
-    const dbName = 'anyapi';
-    // Use connect method to connect to the server
-    MongoClient.connect(url, (err, client) => {
-      if (err) throw err;
-      this.db = client.db(dbName);
-      logInfo(`DB ${dbName} connected`);
-    });
-  }
-
-  getAll(collection: string, options: any = {}) {
-    return this.db.collection(collection).find({}, options).toArray();
-  }
-
-  get(collection: string, id: string) {
-    // return this.db.collection(collection).findOne({ _id: new mongo.ObjectId(id) });
-    return this.db.collection(collection).findOne({ id });
-  }
-
-  create(collection: string, data: any) {
-    const id = HashID.generate();
-    delete data.id;
-    return this.db.collection(collection).insert({ id, ...data }, { w: 1 });
-  }
-
-  async update(collection: string, id: string, data: any) {
-    await this.db.collection(collection).update({ id }, { $set: data }, {});
-    return this.db.collection(collection).findOne({ id });
-  }
-
-  destroy(collection: string, id: string) {
-    return this.db.collection(collection).remove({ id }, { w: 1 });
-  }
-}
-*/

@@ -1,13 +1,10 @@
 import * as restify from 'restify';
 import * as restifyErrors from 'restify-errors';
 import { Adapter } from '../typings/index';
-import MongoDBAdapter from './adapters/mongodb';
 import { logInfo, logError } from './utils';
 
-export default function (baseUrl: string) {
+export default function (baseUrl: string, adapter: Adapter) {
   const api = restify.createServer();
-
-  const adapter: Adapter = MongoDBAdapter();
 
   api.use(restify.plugins.acceptParser(api.acceptable));
   api.use(restify.plugins.authorizationParser());
@@ -94,7 +91,7 @@ export default function (baseUrl: string) {
       const { collection, id } = req.params;
       logInfo(`DELETE on ${collection} with ID ${id}`);
       const doc = await adapter.destroy(collection, id);
-      res.send(200, 'Document(s) affected ' + doc);
+      res.send(doc);
     } catch (err) {
       next(new restifyErrors.ResourceNotFoundError('Delete error'));
       logError(err);

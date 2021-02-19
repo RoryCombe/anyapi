@@ -4,11 +4,12 @@
   "license": "MIT",
   "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
   "scripts": {
-    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "test": "jest",
+    "tw": "npm t -- --watch",
     "tsc": "tsc",
     "compile": "npm run tsc",
     "prestart": "npm run compile",
-    "start": "node dist/anyapi.js"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
