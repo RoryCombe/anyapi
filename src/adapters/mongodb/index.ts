@@ -11,10 +11,11 @@ interface AdapterOptions {
 export default (adapterOptions: AdapterOptions = {}): Adapter => {
   const {
     url = 'mongodb://localhost:27017',
-    dbName = 'anyapi',
+    dbName = process.env.NODE_ENV === 'test' ? 'anyapi-test' : 'anyapi',
     pageSize = 50,
   } = adapterOptions;
   let db: Db;
+
   // Use connect method to connect to the server
   MongoClient.connect(url, (err, client) => {
     if (err) throw err;

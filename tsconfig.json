@@ -5,6 +5,7 @@
     "importHelpers": true,
     "strict": true,
     "noEmitOnError": true,
+    "esModuleInterop": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist/",
