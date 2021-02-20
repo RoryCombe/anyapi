@@ -6,6 +6,9 @@
 ---
 
 <!-- prettier-ignore-start -->
+![CI status](https://github.com/rorycombe/anyapi/workflows/.github/workflows/node.js.yml/badge.svg?branch=master)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/node.js.yml)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/validate?logo=github&style=flat-square)
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
 [![version][version-badge]][package]
