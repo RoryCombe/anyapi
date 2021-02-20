@@ -1,21 +1,11 @@
 <div align="center">
-  <h1>any API</h1>
+  <h1>any API 🤖</h1>
   <p>A simple, zero config RESTful api that takes whatever you want to throw at it</p>
 </div>
 
 ---
 
-<!-- prettier-ignore-start -->
-![CI status](https://github.com/rorycombe/anyapi/workflows/.github/workflows/node.js.yml/badge.svg?branch=master)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/node.js.yml)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/validate?logo=github&style=flat-square)
-[![Build Status][build-badge]][build]
-[![Code Coverage][coverage-badge]][coverage]
-[![version][version-badge]][package]
-[![downloads][downloads-badge]][npmtrends]
-[![MIT License][license-badge]][license]
-[![All Contributors][all-contributors-badge]](#contributors-)
-<!-- prettier-ignore-end -->
 
 ## Getting Started
 
