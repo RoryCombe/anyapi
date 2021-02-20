@@ -12,7 +12,6 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@shelf/jest-mongodb": "^1.2.3",
     "date-fns": "^2.17.0",
     "dotenv": "^8.2.0",
     "mongodb": "^3.1.13",
@@ -20,6 +19,7 @@
     "restify-errors": "^8.0.2"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
     "@types/jest": "^26.0.20",
     "@types/mongodb": "^3.0.5",
     "@types/restify": "^5.0.7",

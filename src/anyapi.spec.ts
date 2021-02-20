@@ -2,30 +2,46 @@ import supertest, { SuperTest } from 'supertest';
 import { Adapter } from '../typings';
 import api from './anyapi';
 import MongoDBAdapter from './adapters/mongodb';
-import { MongoClient } from 'mongodb';
+import { Db, MongoClient, MongoClientOptions } from 'mongodb';
 
 let request: SuperTest<any>;
+let connection: MongoClient;
+let db: Db;
 
-let mongoClient: MongoClient;
+beforeAll(async () => {
+  connection = await MongoClient.connect((global as any).__MONGO_URI__, {
+    useNewUrlParser: true,
+  } as MongoClientOptions);
+  db = connection.db((global as any).__MONGO_DB_NAME__);
 
-beforeAll((done) => {
   const PORT = 2000;
   const BASE_URL = `http://localhost:${PORT}`;
-  MongoDBAdapter({
-    url: 'mongodb://localhost:27017',
-    dbName: 'anyapi-test',
+  const adapter = await MongoDBAdapter(db, {
     pageSize: 50,
-    dropDatabase: true,
-  }).then(({ adapter, client }) => {
-    request = supertest(api(BASE_URL, adapter));
-    mongoClient = client;
-    done();
   });
+  request = supertest(api(BASE_URL, adapter));
 });
 
-afterAll(() => {
-  mongoClient.close();
+afterAll(async () => {
+  await connection.close();
 });
+
+// beforeAll((done) => {
+//   MongoDBAdapter({
+//     url: (global as any).__MONGO_URI__, // 'mongodb://localhost:27017',
+//     dbName: 'anyapi-test',
+//     pageSize: 50,
+//     dropDatabase: true,
+//   }).then(({ adapter, client }) => {
+//     request = supertest(api(BASE_URL, adapter));
+//     mongoClient = client;
+//     done();
+//   });
+// });
+
+// afterAll(() => {
+//   mongoClient.close();
+// });
 
 describe('any api', () => {
   test('GET ALL COLLECTIONS - lists all collections', async () => {

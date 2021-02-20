@@ -1,54 +1,28 @@
-import { MongoClient, Db, MongoClientOptions } from 'mongodb';
+import { Db } from 'mongodb';
 import { Adapter } from '../../../typings';
-import { generateHashId, getMeta, logInfo } from '../../utils';
+import { generateHashId, getMeta } from '../../utils';
 
 interface AdapterOptions {
-  url?: string;
-  dbName?: string;
   pageSize?: number;
-  dropDatabase?: boolean;
 }
 
 export default async (
+  db: Db,
   adapterOptions: AdapterOptions = {}
-): Promise<{ adapter: Adapter; client: MongoClient }> => {
-  const {
-    url = 'mongodb://localhost:27017',
-    dbName = 'anyapi',
-    pageSize = 50,
-    dropDatabase,
-  } = adapterOptions;
-  let db: Db;
-
-  // Use connect method to connect to the server
-  const client = await MongoClient.connect(url, {
-    useUnifiedTopology: true,
-    writeConcern: {
-      j: true,
-    },
-  } as MongoClientOptions);
-
-  if (dropDatabase) {
-    await client.db(dbName).dropDatabase();
-  }
-
-  db = client.db(dbName);
+): Promise<Adapter> => {
+  const { pageSize = 50 } = adapterOptions;
 
   const dbCollection = (collection: string) =>
     db.collection(collection, {
       writeConcern: { w: null },
     } as any);
 
-  logInfo(`DB ${dbName} connected`);
-
   const getCollections = async () => {
-    logInfo(`db ${JSON.stringify(db.databaseName)}`);
     const collections = await db.collections();
     return collections.map((c) => c.collectionName);
   };
 
   const getAll = async (collection: string, options: any = {}) => {
-    logInfo(`db ${JSON.stringify(db.databaseName)}`);
     const { page = 1, baseUrl } = options;
     const [results, count] = await Promise.all([
       dbCollection(collection).find({}, options).toArray(),
@@ -82,14 +56,11 @@ export default async (
   };
 
   return {
-    adapter: {
-      getCollections,
-      getAll,
-      get,
-      create,
-      update,
-      destroy,
-    },
-    client,
+    getCollections,
+    getAll,
+    get,
+    create,
+    update,
+    destroy,
   };
 };

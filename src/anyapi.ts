@@ -23,22 +23,25 @@ export default function (baseUrl: string, adapter: Adapter) {
   // Get multiple
   api.get('/:collection', async (req, res, next) => {
     const options = { ...(req.query || {}), baseUrl };
-    logInfo('Options: ' + JSON.stringify(options));
     try {
       const { collection } = req.params;
-      let doc;
-      if (collection) {
-        logInfo(`GET ALL on ${collection}`);
-        doc = await adapter.getAll(collection, options);
+      if (collection === 'favicon.ico') {
+        res.send([]);
       } else {
-        logInfo('GET Collections');
-        const collections = await adapter.getCollections();
-        doc = collections.reduce((acc, val) => {
-          acc[val] = `${baseUrl}/${val}`;
-          return acc;
-        }, {} as Record<string, string>);
+        let doc;
+        if (collection) {
+          logInfo(`GET ALL on ${collection}`);
+          doc = await adapter.getAll(collection, options);
+        } else {
+          logInfo('GET Collections');
+          const collections = await adapter.getCollections();
+          doc = collections.reduce((acc, val) => {
+            acc[val] = `${baseUrl}/${val}`;
+            return acc;
+          }, {} as Record<string, string>);
+        }
+        res.send(doc || []);
       }
-      res.send(doc || []);
     } catch (err) {
       next(new restifyErrors.ResourceNotFoundError('Get multiple error'));
       logError(err);
