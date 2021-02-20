@@ -6,6 +6,7 @@
 ---
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/validate?logo=github&style=flat-square)
+[![codecov](https://codecov.io/gh/RoryCombe/anyapi/branch/master/graph/badge.svg?token=S462N7D27B)](https://codecov.io/gh/RoryCombe/anyapi)
 
 ## Getting Started
 
