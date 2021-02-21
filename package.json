@@ -1,5 +1,5 @@
 {
-  "name": "@rorycombe/anyapi",
+  "name": "@anyapi/anyapi",
   "version": "1.0.1",
   "license": "MIT",
   "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
