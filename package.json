@@ -2,6 +2,7 @@
   "name": "@anyapi/anyapi",
   "version": "1.0.1",
   "license": "MIT",
+  "homepage": "https://github.com/RoryCombe/anyapi",
   "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
   "private": false,
   "bin": {
