@@ -10,3 +10,6 @@ typings
 CHANGELOG.md
 .gitignore
 jest*
+.git
+.np-config.json
+tsconfig.json
