@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import MongoDBAdapter from './adapters/mongodb';
 import { logError, logMsg } from './utils';

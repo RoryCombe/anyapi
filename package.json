@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "license": "MIT",
   "description": "anyapi is a generic, store anything api implemented in node.js using restify and mongodb",
+  "bin": {
+    "anyapi": "./dist/index.js"
+  },
   "scripts": {
     "test": "jest",
     "tw": "npm t -- --watch",
