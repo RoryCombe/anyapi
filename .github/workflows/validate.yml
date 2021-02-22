@@ -5,9 +5,8 @@ name: validate
 
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    branches-ignore:
+      - master
 
 jobs:
   build:
