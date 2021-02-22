@@ -22,17 +22,19 @@ and
 npm start
 ```
 
-Then simply post some data to anything, for example `todos`:
+This will start the server on the default port of `2000`. Using any HTTP client you can now `GET`, `POST`, `PUT`, `DELETE` with a collection type that is completely variable and up to you.
+
+For example `hamburgers`:
 
 ```
-fetch('http://localhost:2000/todos', {
+fetch('http://localhost:2000/hamburgers', {
   method: 'POST',
-  body: JSON.stringify({ title: 'Write a README', completed: false }),
+  body: JSON.stringify({ name: 'Cheese Burger', ingredients: ['beef', 'tomato', 'lettuce', 'cheese'] }),
   headers: new Headers({'Content-Type': 'application/json'})
 })
 ```
 
-Then GET on `http://localhost:2000/todos` to see your new collection
+Then GET on `http://localhost:2000/hamburgers` to see your new collection
 
 ## Methods
 
