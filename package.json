@@ -18,7 +18,7 @@
     "tsc": "tsc",
     "compile": "npm run tsc",
     "prestart": "npm run compile",
-    "start": "node dist/index.js --mongo --data='/path/to/file'",
+    "start": "node dist/index.js --mongo",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
@@ -28,7 +28,7 @@
     "dotenv": "^8.2.0",
     "figlet": "^1.5.0",
     "lowdb": "^1.0.0",
-    "minimist": "^0.0.8",
+    "minimist": "^1.2.5",
     "mongodb": "^3.1.13",
     "restify": "^8.5.1",
     "restify-errors": "^8.0.2",
