@@ -2,6 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "lib": ["es6", "dom"],
+    "resolveJsonModule": true,
     "importHelpers": true,
     "strict": true,
     "noEmitOnError": true,

@@ -22,8 +22,13 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
     "date-fns": "^2.17.0",
     "dotenv": "^8.2.0",
+    "figlet": "^1.5.0",
+    "lowdb": "^1.0.0",
+    "minimist": "^1.2.5",
     "mongodb": "^3.1.13",
     "restify": "^8.5.1",
     "restify-errors": "^8.0.2",
@@ -31,7 +36,10 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
+    "@types/clear": "^0.1.1",
+    "@types/figlet": "^1.2.1",
     "@types/jest": "^26.0.20",
+    "@types/lowdb": "^1.0.9",
     "@types/mongodb": "^3.0.5",
     "@types/restify": "^5.0.7",
     "@types/restify-errors": "^4.3.2",

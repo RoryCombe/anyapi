@@ -3,3 +3,5 @@ dist
 .DS_Store
 coverage
 globalConfig.json
+db-test.json
+db.json
