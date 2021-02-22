@@ -34,10 +34,7 @@ export default async (
 
   const create = async (collection: string, { id: _id, ...data }: any) => {
     if (!db.get(collection).value()) {
-      console.log(`${collection} collection`, db.get(collection).value());
-      console.log('new set getState', db.getState());
       db.setState({ ...(db.getState() || {}), [collection]: [] });
-      console.log('after getState', db.getState());
     }
     const id = generateHashId();
     const obj = {
@@ -46,18 +43,15 @@ export default async (
       id,
     };
     (db.get(collection) as any).push(obj).write();
-    console.log('getState', db.getState());
     return Promise.resolve(obj);
   };
 
   const update = async (collection: string, id: string, data: any) => {
     (db.get(collection) as any).find({ id }).assign(data).write();
-    console.log('getState', db.getState());
     return Promise.resolve((db.get(collection) as any).find({ id }).value());
   };
 
   const destroy = async (collection: string, id: string) => {
-    console.log('getState', db.getState());
     (db.get(collection) as any).remove({ id }).write();
     return { n: 1, ok: 1 };
   };
