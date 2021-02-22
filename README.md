@@ -8,6 +8,8 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rorycombe/anyapi/validate?logo=github&style=flat-square)
 [![codecov](https://codecov.io/gh/RoryCombe/anyapi/branch/master/graph/badge.svg?token=S462N7D27B)](https://codecov.io/gh/RoryCombe/anyapi)
 
+> Note that currently anyapi works only with MongoDB and as such looks for a running mongo connection on the standard `localhost:27017`. There it will create a database called `anyapi` and persist any changes to it.
+
 ## Getting Started
 
 ```
