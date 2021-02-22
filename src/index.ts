@@ -3,17 +3,16 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import MongoDBAdapter from './adapters/mongodb';
 import LowDBAdapter from './adapters/lowdb';
-import { logError, logMsg } from './utils';
+import { logError, logMsg, logHeader } from './utils';
 import api from './anyapi';
 import clear from 'clear';
-import chalk from 'chalk';
-import figlet from 'figlet';
 
 const argv = require('minimist')(process.argv.slice(2));
 
-const PORT = 2000;
+const PORT = argv.port || 2000;
 const BASE_URL = `http://localhost:${PORT}`;
-const pageSize = 50;
+const pageSize = argv['page-size'] || 50;
+const mongoDbUrl = argv['mongo-db-url'] || 'mongodb://localhost:27017';
 
 const startLowDB = () => {
   logMsg('Starting lowDB adapter');
@@ -23,9 +22,8 @@ const startLowDB = () => {
 const startMongo = async () => {
   try {
     logMsg('Starting Mongo DB adapter');
-    const url = 'mongodb://localhost:27017';
     const dbName = 'anyapi';
-    const connection = await MongoClient.connect(url, {
+    const connection = await MongoClient.connect(mongoDbUrl, {
       useUnifiedTopology: true,
       writeConcern: {
         j: true,
@@ -43,10 +41,7 @@ const startMongo = async () => {
 const run = async () => {
   try {
     clear();
-
-    console.log(
-      chalk.blueBright(figlet.textSync('Any API', { horizontalLayout: 'full' }))
-    );
+    logHeader('any api');
 
     const startFn = argv.mongo ? startMongo : startLowDB;
     const adapter = await startFn();

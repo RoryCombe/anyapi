@@ -18,7 +18,7 @@
     "tsc": "tsc",
     "compile": "npm run tsc",
     "prestart": "npm run compile",
-    "start": "node dist/index.js --mongo",
+    "start": "node dist/index.js",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
