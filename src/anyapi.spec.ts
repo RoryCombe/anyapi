@@ -98,7 +98,9 @@ const testFullLoop = async () => {
 describe('Any API', () => {
   describe('lowdb adapter', () => {
     beforeAll(async () => {
-      fs.unlinkSync('db-test.json');
+      try {
+        fs.unlinkSync('db-test.json');
+      } catch (error) {}
       const PORT = 2000;
       const BASE_URL = `http://localhost:${PORT}`;
       const adapter = await LowDBAdapter({
